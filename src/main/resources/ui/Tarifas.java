@@ -32,7 +32,6 @@ import Dao.TipoHabitacionDAO; // Importar TipoHabitacionDAO
 import modelos.Tarifa;
 import modelos.TiposHabitacion; // Importar TiposHabitacion
 
-import ui.TiposHabitacion;
 import ui.Rentas;
 import ui.Clientes;
 import ui.PanelHabitaciones1;
@@ -104,7 +103,7 @@ public class Tarifas {
 		menuTitulo.setBounds(131, 126, 400, 56);
 		panel.add(menuTitulo);
 		
-		JButton botonSuperior1 = new JButton(""); // Asumiendo que es para el usuario actual
+		JButton botonSuperior1 = new JButton(""); 
 		botonSuperior1.setBackground(new Color(0, 0, 0));
 		botonSuperior1.setBorderPainted(false);
 		botonSuperior1.setFocusPainted(false);
@@ -116,7 +115,7 @@ public class Tarifas {
 		botonSuperior1.setIcon(new ImageIcon(c3));
 		panel_1.add(botonSuperior1);
 
-		JButton botonSuperior2 = new JButton(""); // Asumiendo que es para información
+		JButton botonSuperior2 = new JButton(""); 
 		botonSuperior2.setBackground(new Color(0, 0, 0));
 		botonSuperior2.setBorderPainted(false);
 		botonSuperior2.setFocusPainted(false);

@@ -551,10 +551,7 @@ public class RentasModificarReserva {
                             LocalDateTime.of(fechaCheckOut, LocalDateTime.now().toLocalTime()), // Solo fecha
                             "Activa" // Estado inicial
                         );
-                        // Suponiendo que el modelo Rentas tiene un campo para el número de huéspedes
-                        // y que se puede asociar una renta a un cliente y una habitación.
-                        // También se debe manejar el número de habitaciones, aunque el UI es estático a 1
-                        // Por simplicidad, asumimos una renta por habitación.
+                       
                         nuevaRenta.setNumHuespedes(numHuespedes);
 
 

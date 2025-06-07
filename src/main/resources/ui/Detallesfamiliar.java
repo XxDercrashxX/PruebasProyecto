@@ -182,7 +182,7 @@ public class Detallesfamiliar {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose(); // Cierra la ventana actual
 				TiposHabitacion conexion = new TiposHabitacion();
-				conexion.frame.setVisible(true); 
+				conexion.frame.setVisible(true);
 			}
 		});
 		btnTiposDeRentas.setBounds(1023, 0, 134, 23);
@@ -196,7 +196,7 @@ public class Detallesfamiliar {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose(); // Cierra la ventana actual
 				Rentas conexion = new Rentas();
-				conexion.frame.setVisible(true); 
+				conexion.frame.setVisible(true);
 			}
 		});
 		btnrentas.setForeground(Color.WHITE);
@@ -214,7 +214,7 @@ public class Detallesfamiliar {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose(); // Cierra la ventana actual
 				Clientes conexion = new Clientes();
-				conexion.frame.setVisible(true); 
+				conexion.frame.setVisible(true);
 			}
 		});
 		btnclientes.setForeground(Color.WHITE);
@@ -232,7 +232,7 @@ public class Detallesfamiliar {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose(); // Cierra la ventana actual
 				PanelHabitaciones1 conexion = new PanelHabitaciones1();
-				conexion.frame.setVisible(true); 
+				conexion.frame.setVisible(true);
 			}
 		});
 		btnhabitaciones.setForeground(Color.WHITE);
@@ -250,7 +250,7 @@ public class Detallesfamiliar {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose(); // Cierra la ventana actual
 				Tarifas conexion = new Tarifas();
-				conexion.frame.setVisible(true); 
+				conexion.frame.setVisible(true);
 			}
 		});
 		btntarifas.setForeground(Color.WHITE);

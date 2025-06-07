@@ -1,8 +1,8 @@
+// ui/TiposHabitacion.java
 package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -12,19 +12,17 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.JScrollPane;
-import java.awt.FlowLayout; // Para un layout flexible de los paneles de tipo
+import java.awt.FlowLayout;
 
-import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.FlatLightLaf; 
 
-import Dao.TipoHabitacionDAO; // Importar el DAO para TiposHabitacion
-import modelos.TiposHabitacion; // Importar la clase de modelo TiposHabitacion
+import Dao.TipoHabitacionDAO; // Importar el DAO para TipoHabitacion
+// import modelos.TiposHabitacion; // ¡¡¡ESTA LÍNEA SE HA ELIMINADO PARA RESOLVER LA COLISIÓN!!!
 import ui.Menu;
 import ui.Rentas;
 import ui.Clientes;
@@ -32,66 +30,69 @@ import ui.PanelHabitaciones1; // Asumiendo que esta es la primera vista de habit
 import ui.Tarifas;
 import ui.DetallesHabitacion4; // Asumiendo que esta clase existe y puede recibir un ID
 import ui.Detallesfamiliar; // Asumiendo que esta clase existe
-import ui.EliminarTipodeHabitacion; // Asumiendo que esta clase existe y puede recibir un ID
-import ui.EditartiposdeHabitaciones; // Asumiendo que esta clase existe y puede recibir un ID
+// Importación corregida para Editar y Eliminar: usan el nombre EXACTO de tu clase
+import ui.EditarTipoDeHabitacion; // Clase de edición
+import ui.EliminarTipodeHabitacion; // Clase de eliminación
 import ui.Creartipodehabitacion; // Asumiendo que esta clase existe
 
 public class TiposHabitacion {
 
-	JFrame frame;
-    private TipoHabitacionDAO tipoHabitacionDAO; // Instancia del DAO para interactuar con la BD
-    private JPanel tiposHabitacionDisplayPanel; // Panel donde se añadirán dinámicamente los tipos de habitación
+	public JFrame frame;
+    private TipoHabitacionDAO tipoHabitacionDAO;
+    private JPanel tiposHabitacionDisplayPanel;
 
 	public TiposHabitacion() {
 		try {
             UIManager.setLookAndFeel(new FlatLightLaf());
-            UIManager.put("Button.arc", 0); // Esquinas redondas para un estilo moderno
+            UIManager.put("Button.arc", 0);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        tipoHabitacionDAO = new TipoHabitacionDAO(); // Inicializar el DAO
-		initialize(); // Inicializar los componentes de la interfaz
-        loadTiposHabitacion(); // Cargar y mostrar los tipos de habitación desde la BD al iniciar
+        tipoHabitacionDAO = new TipoHabitacionDAO();
+		initialize();
+        loadTiposHabitacion();
 	}
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setResizable(false); // Ventana no redimensionable
-		frame.setBounds(100, 100, 1180, 700); // Tamaño y posición de la ventana
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cerrar la aplicación al cerrar la ventana
+		frame.setResizable(false);
+		frame.setBounds(100, 100, 1180, 700);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255)); // Fondo blanco para el panel principal
-		frame.getContentPane().add(panel, BorderLayout.CENTER); // Añadir al centro del frame
-		panel.setLayout(null); // Usar layout nulo para posicionamiento absoluto
+		panel.setBackground(new Color(255, 255, 255));
+		frame.getContentPane().add(panel, BorderLayout.CENTER);
+		panel.setLayout(null);
 
-		JPanel panel_1 = new JPanel(); // Panel superior negro para el encabezado
+		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(0, 0, 0));
 		panel_1.setBounds(0, 0, 1164, 95);
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 
-		JPanel panel_2 = new JPanel(); // Panel gris debajo del encabezado negro
+		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(55, 54, 48));
 		panel_2.setBounds(0, 95, 1164, 26);
 		panel.add(panel_2);
 		panel_2.setLayout(null);
 
-		JLabel logo = new JLabel(""); // Etiqueta para el logo
+		JLabel logo = new JLabel("");
 		logo.setBounds(0, 0, 170, 95);
-		ImageIcon portada1 = new ImageIcon(getClass().getResource("/images/logo.png")); // Cargar imagen del logo
+		ImageIcon portada1 = new ImageIcon(getClass().getResource("/images/logo.png"));
+		if (portada1.getImageLoadStatus() == java.awt.MediaTracker.ERRORED) {
+			System.err.println("Error al cargar la imagen: /images/logo.png");
+		}
 	    Image portada2 = portada1.getImage();
-	    Image portada3 = portada2.getScaledInstance(170, 95,Image.SCALE_SMOOTH); // Escalar imagen
-	    logo.setIcon(new ImageIcon(portada3)); // Establecer icono
+	    Image portada3 = portada2.getScaledInstance(170, 95,Image.SCALE_SMOOTH);
+	    logo.setIcon(new ImageIcon(portada3));
 		panel_1.add(logo);
 		
-		JLabel Titulo = new JLabel("Tipos de habitaciones:"); // Título de la sección
+		JLabel Titulo = new JLabel("Tipos de habitaciones:");
 		Titulo.setForeground(new Color(255, 255, 255));
 		Titulo.setFont(new Font("Jost* Medium", Font.PLAIN, 35));
 		Titulo.setBounds(180, 11, 410, 73);
 		panel_1.add(Titulo);
 
-		// Botones de iconos superiores (usuario, información) - Sin funcionalidad de navegación aquí
 		JButton botonSuperior1 = new JButton("");
 		botonSuperior1.setBackground(new Color(0, 0, 0));
 		botonSuperior1.setBorderPainted(false);
@@ -116,7 +117,7 @@ public class TiposHabitacion {
 		botonSuperior2.setIcon(new ImageIcon(e3));
 		panel_1.add(botonSuperior2);
 
-		JButton botonVolver = new JButton(""); // Botón para volver al menú principal
+		JButton botonVolver = new JButton("");
 		botonVolver.setForeground(new Color(255, 255, 255));
 		botonVolver.setBackground(new Color(255, 255, 255));
 		botonVolver.setBorderPainted(false);
@@ -124,8 +125,8 @@ public class TiposHabitacion {
 		botonVolver.setContentAreaFilled(true);
 		botonVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.dispose(); // Cierra la ventana actual
-				Menu conexion = new Menu(); // Abre la ventana del menú principal
+				frame.dispose();
+				Menu conexion = new Menu();
 				conexion.frame.setVisible(true);
 			}
 		});
@@ -136,7 +137,6 @@ public class TiposHabitacion {
 		botonVolver.setIcon(new ImageIcon(f3));
 		panel.add(botonVolver);
 
-		// Botones de navegación superior para otras secciones
 		JButton btnTiposDeRentas = new JButton("<html>Tipos de habitaciones &#8594;</html>");
 		btnTiposDeRentas.setFont(new Font("Jost* Medium", Font.PLAIN, 12));
 		btnTiposDeRentas.setForeground(new Color(255, 255, 255));
@@ -231,7 +231,7 @@ public class TiposHabitacion {
 		btnEliminarTipo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
-				EliminarTipodeHabitacion conexion = new EliminarTipodeHabitacion(); // Asumo que necesitará un ID después
+				EliminarTipodeHabitacion conexion = new EliminarTipodeHabitacion();
 				conexion.frame.setVisible(true);
 			}
 		});
@@ -245,7 +245,9 @@ public class TiposHabitacion {
 		btnEditarTipo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
-				EditartiposdeHabitaciones conexion = new EditartiposdeHabitaciones(); // Asumo que necesitará un ID después
+				// Se llama al constructor sin argumentos de la clase EditarTipoDeHabitacion
+                // La pantalla de edición deberá tener su propia lógica para seleccionar o buscar el tipo de habitación.
+				EditarTipoDeHabitacion conexion = new EditarTipoDeHabitacion();
 				conexion.frame.setVisible(true);
 			}
 		});
@@ -270,37 +272,34 @@ public class TiposHabitacion {
 
         // Panel para mostrar los tipos de habitación dinámicamente
         tiposHabitacionDisplayPanel = new JPanel();
-        tiposHabitacionDisplayPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 20)); // Layout flexible, con espacio entre componentes
-        tiposHabitacionDisplayPanel.setBackground(new Color(255, 255, 255)); // Fondo blanco para el panel de contenido
+        tiposHabitacionDisplayPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 20));
+        tiposHabitacionDisplayPanel.setBackground(new Color(255, 255, 255));
 
         JScrollPane scrollPane = new JScrollPane(tiposHabitacionDisplayPanel);
-        scrollPane.setBounds(131, 193 + 55 + 20, 980, 440); // Posición debajo de los botones de acción
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED); // Scroll vertical si es necesario
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // Sin scroll horizontal
-        panel.add(scrollPane); // Añadir el JScrollPane al panel principal
+        scrollPane.setBounds(131, 193 + 55 + 20, 980, 440);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        panel.add(scrollPane);
 	}
 
-    // Método para cargar y mostrar los tipos de habitación desde la base de datos
     private void loadTiposHabitacion() {
-        tiposHabitacionDisplayPanel.removeAll(); // Limpiar el panel antes de añadir nuevos paneles
+        tiposHabitacionDisplayPanel.removeAll();
 
-        // Obtener todos los tipos de habitación usando el DAO
         List<modelos.TiposHabitacion> tipos = tipoHabitacionDAO.getAllTiposHabitacion();
 
-        // Icono por defecto para los tipos de habitación si no hay una imagen específica
         ImageIcon defaultIcon = new ImageIcon(getClass().getResource("/images/foto_default.png"));
-        // Asegúrate de que esta imagen exista o cámbiala por una que tengas.
-        // Si no tienes una, puedes crear una muy simple: https://placehold.co/200x200/cccccc/000000?text=Tipo
-
+		if (defaultIcon.getImageLoadStatus() == java.awt.MediaTracker.ERRORED) {
+			System.err.println("Error al cargar la imagen por defecto: /images/foto_default.png. Asegúrate de que la ruta es correcta.");
+		}
         Image defaultImage = defaultIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
         ImageIcon scaledDefaultIcon = new ImageIcon(defaultImage);
 
         if (tipos != null && !tipos.isEmpty()) {
-            for (modelos.TiposHabitacion tipo : tipos) {
+            for (modelos.TiposHabitacion tipo : tipos) { // ¡ATENCIÓN! Aquí se usa el nombre completo
                 JPanel typePanel = new JPanel();
-                typePanel.setLayout(null); // Usar layout nulo para un control preciso
-                typePanel.setBackground(new Color(152, 193, 217)); // Color de fondo del panel de tipo
-                typePanel.setPreferredSize(new java.awt.Dimension(300, 440)); // Establecer tamaño preferido para FlowLayout
+                typePanel.setLayout(null);
+                typePanel.setBackground(new Color(152, 193, 217));
+                typePanel.setPreferredSize(new java.awt.Dimension(300, 440));
 
                 JLabel lblNombreTipo = new JLabel(tipo.getNombreTipo());
                 lblNombreTipo.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 20));
@@ -312,9 +311,6 @@ public class TiposHabitacion {
                 lblDescripcion.setBounds(10, 40, 280, 100);
                 typePanel.add(lblDescripcion);
 
-                // Aquí podrías intentar cargar una imagen específica para cada tipo si tuvieras una convención de nombres
-                // Por ejemplo: /images/tipo_individual.png, /images/tipo_doble.png
-                // Por ahora, usamos el placeholder
                 JLabel lblImagen = new JLabel(scaledDefaultIcon);
                 lblImagen.setBounds(50, 150, 200, 200);
                 typePanel.add(lblImagen);
@@ -325,12 +321,11 @@ public class TiposHabitacion {
                 btnDetalles.setBackground(new Color(255, 230, 167));
                 btnDetalles.setFont(new Font("Tahoma", Font.BOLD, 20));
                 btnDetalles.setBounds(10, 375, 90, 55);
-                final int tipoId = tipo.getIdTipoHabitacion(); // Necesario para el ActionListener
+                final int tipoId = tipo.getIdTipoHabitacion();
                 btnDetalles.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         frame.dispose();
-                        // Asumo que DetallesHabitacion4 puede recibir un ID de tipo de habitación en su constructor
                         DetallesHabitacion4 detallesWindow = new DetallesHabitacion4(tipoId);
                         detallesWindow.frame.setVisible(true);
                     }
@@ -345,8 +340,10 @@ public class TiposHabitacion {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         frame.dispose();
-                        // Asumo que EditartiposdeHabitaciones puede recibir un ID de tipo de habitación en su constructor
-                        EditartiposdeHabitaciones editarWindow = new EditartiposdeHabitaciones(tipoId);
+                        // Se llama al constructor sin argumentos de la clase EditarTipoDeHabitacion
+                        // NOTA: Esta clase (EditarTipoDeHabitacion) no tiene un constructor que acepte un ID.
+                        // La pantalla de edición deberá tener su propia lógica para seleccionar o buscar el tipo de habitación.
+                        EditarTipoDeHabitacion editarWindow = new EditarTipoDeHabitacion();
                         editarWindow.frame.setVisible(true);
                     }
                 });
@@ -361,17 +358,18 @@ public class TiposHabitacion {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         frame.dispose();
-                        // Asumo que EliminarTipodeHabitacion puede recibir un ID de tipo de habitación en su constructor
-                        EliminarTipodeHabitacion eliminarWindow = new EliminarTipodeHabitacion(tipoId);
+                        // Se llama al constructor sin argumentos de la clase EliminarTipodeHabitacion
+                        // NOTA: Esta clase (EliminarTipodeHabitacion) no tiene un constructor que acepte un ID.
+                        // La pantalla de eliminación deberá tener su propia lógica para seleccionar o buscar el tipo de habitación.
+                        EliminarTipodeHabitacion eliminarWindow = new EliminarTipodeHabitacion();
                         eliminarWindow.frame.setVisible(true);
                     }
                 });
                 typePanel.add(btnEliminar);
 
-                tiposHabitacionDisplayPanel.add(typePanel); // Añadir el panel de tipo al panel principal de visualización
+                tiposHabitacionDisplayPanel.add(typePanel);
             }
         } else {
-            // Mensaje si no hay tipos de habitación para mostrar
             JLabel noTypesLabel = new JLabel("No se encontraron tipos de habitación.");
             noTypesLabel.setFont(new Font("Jost*", Font.BOLD, 20));
             noTypesLabel.setForeground(Color.GRAY);
@@ -379,8 +377,8 @@ public class TiposHabitacion {
             tiposHabitacionDisplayPanel.add(noTypesLabel);
         }
 
-        tiposHabitacionDisplayPanel.revalidate(); // Revalidar el panel para que se actualice la vista
-        tiposHabitacionDisplayPanel.repaint(); // Repintar el panel
+        tiposHabitacionDisplayPanel.revalidate();
+        tiposHabitacionDisplayPanel.repaint();
     }
 
 	public void setVisible(boolean b) {
